@@ -1,15 +1,15 @@
-FROM ubuntu:16.04
+FROM ubuntu:20.04
 
-RUN sed -i "s/http:\/\/archive.ubuntu.com/http:\/\/mirrors.tuna.tsinghua.edu.cn/g" /etc/apt/sources.list && \
-    apt-get update && apt-get -y dist-upgrade && \
+RUN apt-get update && apt-get -y dist-upgrade && \
     apt-get install -y lib32z1 xinetd
 
 RUN useradd -m ctf
 
 WORKDIR /home/ctf
-
-RUN cp -R /lib* /home/ctf && \
-    cp -R /usr/lib* /home/ctf
+RUN ls /home/ctf -la
+RUN cp -R /lib* /home/ctf
+RUN mkdir /home/ctf/usr && \
+    cp -R /usr/* /home/ctf/usr
 
 RUN mkdir /home/ctf/dev && \
     mknod /home/ctf/dev/null c 1 3 && \
@@ -19,9 +19,7 @@ RUN mkdir /home/ctf/dev && \
     chmod 666 /home/ctf/dev/*
 
 RUN mkdir /home/ctf/bin && \
-    cp /bin/sh /home/ctf/bin && \
-    cp /bin/ls /home/ctf/bin && \
-    cp /bin/cat /home/ctf/bin
+    cp /bin/* /home/ctf/bin
 
 COPY ./ctf.xinetd /etc/xinetd.d/ctf
 COPY ./start.sh /start.sh

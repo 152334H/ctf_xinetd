@@ -1,30 +1,18 @@
 # ctf_xinetd
 
-> A docker repository for deploying CTF challenges
+Modified from ctf_xinetd. This is a **template docker** folder to be copied for reuse.
+
+This docker is designed to host a single binary-as-a-service on an open port. The binary will run with `stdbuf` and a timeout of 100s by default; change this in `ctf.xinetd` if you wish.
 
 ## Configuration
 
-Put files to floder `bin`. They'll be copied to /home/ctf. **Update the flag** at the same time.
+Put ALL challenge files in  `bin`; they'll be copied to /home/ctf.
 
-Edit `ctf.xinetd`. replace `./helloworld` to your command.
+Run `./setup.sh PORT EXECUTABLE NAME`. This will build & run everything in one command. Alternatively,
 
-You can also edit `Dockerfile, ctf.xinetd, start.sh` to custom your environment.
-
-## Build
-
-```bash
-docker build -t "helloworld" .
-```
-
-DO NOT use *bin* as challenge's name
-
-## Run
-
-```bash
-docker run -d -p "0.0.0.0:pub_port:9999" -h "helloworld" --name="helloworld" helloworld
-```
-
-`pub_port` is the port you want to expose to the public network.
+1. edit `Dockerfile, ctf.xinetd, start.sh` to custom your environment.
+2. docker build -t "helloworld" .
+3. docker run -d -p "0.0.0.0:pub_port:9999" -h "helloworld" --name="helloworld" helloworld
 
 ## Capture traffic
 
